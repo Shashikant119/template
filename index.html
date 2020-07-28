@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Modal</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+       input
+      {
+        margin: 5px;
+      }
+      
+      .blink {
+        animation: blinker 0.9s linear infinite;
+        font-size: 25px;
+        font-weight: bold;
+        font-family: sans-serif;
+      }
+      @keyframes blinker {
+        50% {
+          opacity: 0;
+        }
+      }
+      .blink-one {
+        animation: blinker-one 1s linear infinite;
+      }
+      @keyframes blinker-one {
+        0% {
+          opacity: 0;
+        }
+      }
+      .blink-two {
+        animation: blinker-two 1.4s linear infinite;
+      }
+      @keyframes blinker-two {
+        100% {
+          opacity: 0;
+        }
+      }
+      /* blinking start */
+      .blinking{
+      animation: blinkingText 1.2s infinite;
+      }
+      @keyframes blinkingText{
+    0%{     color: #0de76e;    }
+    49%{    color: #0de76e; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #0de76e;    }
+}
+@media (min-width: 1200px) {
+  .col-lg-9{
+      width: 70% !important;
+  }
+  .col-lg-3{
+      width: 30% !important;
+  }
+  .col-md-9{
+      width: 70% !important;
+  }
+  .col-md-3{
+      width: 30% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-9{
+      width: 70% !important;
+  }
+  .col-lg-3{
+      width: 30% !important;
+  }
+  .col-md-9{
+      width: 70% !important;
+  }
+  .col-md-3{
+      width: 30% !important;
+  }
+}@keyframes blinkingText{
+    0%{     color: #0de76e;    }
+    49%{    color: #0de76e; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #0de76e;    }
+}
+@media (min-width: 1200px) {
+  .col-lg-9{
+      width: 70% !important;
+  }
+  .col-lg-3{
+      width: 30% !important;
+  }
+  .col-md-9{
+      width: 70% !important;
+  }
+  .col-md-3{
+      width: 30% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-lg-9{
+      width: 70% !important;
+  }
+  .col-lg-3{
+      width: 30% !important;
+  }
+  .col-md-9{
+      width: 70% !important;
+  }
+  .col-md-3{
+      width: 30% !important;
+  }
+}
+ /* a border start */
+ a{
+   margin: 5px;
+   font-size: 25px;
+   color: white;
+   padding: 10px;
+ }
+ #nav
+ {
+   background-color: slategray;
+   padding: 10px;
+ }
+  </style>
+</head>
+<body>
+  <div class="container">
+   <h3 class="blinking" style="text-align-last: center;">SHASHIKANT VERMA</h3>
+  <p class="blink" style="color:turquoise;">Blinking text</p>
+  <p class="blink blink-one" style="color:violet;">CSS blinking effect for opacity starting with 0%</p>
+  <marquee behavior="alternate"><p class="blink blink-two" style="color:yellowgreen;">CSS blinking effect for opacity starting with 100%</p></marquee>
+
+
+ <div id="nav">
+  <a href="" style="border-left:1px solid;">Home</a>
+  <a href="" style="border-left:1px solid;">About-Us</a>
+  <a href="" style="border-left:1px solid;">Services</a>
+  <a href="" style="border-left:1px solid;border-right: 1px solid;">Contact-Us</a>
+  <marquee behavior="" direction="left" width = "50%" style="float: right;" scrollamount="5" onmouseover="stop()" onmouseout="start()">
+  <a href="" >Home</a>
+  <a href="">Blogs</a>
+  <a href="">HTML</a>
+  <a href="">LARAVEL</a>
+  <a href="">JQuery</a>
+  </marquee>
+</div>
+  <h2 class="blinking">This is Webstie HTML & CSS</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Register</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style="border:2px solid rgb(0, 247, 255);">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h3 class="modal-title">Fillup The Form</h3>
+        </div>
+        <div class="modal-body">
+           <input type="text" name="name" id="name" class="form-control" placeholder="Name..">
+           <input type="number" name="number" id="number" class="form-control" placeholder="Number..">
+           <input type="text" name="title" id="title" class="form-control" placeholder="Title..">
+           <input type="text" name="body" id="body" class="form-control" placeholder="Body..">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+        </div>
+      </div>
+      <!-- Modal End content-->
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  function fetch_customer_data(query = ' ')
+  {
+      $.ajax({
+          url:"{{ route('live_search.action') }}",
+          method: 'GET',
+          data:{query:query},
+          dataType:'json',
+          success:function(data)
+         {
+             $('tbody').html(data.table_data);
+             $('#total_records').text(data.total_data);
+         }
+      })
+  } 
+</script>
+
+</body>
+</html>
