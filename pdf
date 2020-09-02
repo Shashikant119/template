@@ -16,6 +16,18 @@ class GenPDF extends CI_Controller {
   
 }
 
+or
+
+public function pdftest()
+    {
+        $result['data']=$this->Practice_model->practice_paper();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('testpdf', $result, true);
+        $mpdf->WriteHTML($html);
+        $file_name = 'qms_questions_'.date('Y-m-d').".pdf";
+        $mpdf->Output($file_name, 'D');
+    }
+
 ////genpdf_view.  /html page.....! 
 
 <!DOCTYPE html>
