@@ -1,0 +1,43 @@
+composer require mpdf/mpdf // composer install 
+$config['composer_autoload'] = 'vendor/autoload.php';  setup confit......
+// GenPDF.php file name..../
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+  
+class GenPDF extends CI_Controller {
+  
+    public function index()
+    {
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('genpdf_view',[],true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+  
+}
+
+////genpdf_view.  /html page.....! 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>My PDF</title>
+</head>
+<body>
+  
+<div class="container">
+    <h1>My Own Pdf</h1>
+  
+    <div class="row">
+        <p>This is a demo text used to show how PDF is generated dynamically</p>
+  
+        <p>Try your own in this block</p>
+        <p>This is a paragraph. Edit this to enter your own</p>
+        <p>We have successfully generated our first PDF.</p>
+    </div>
+  
+</div>
+  
+</body>
+</html>
