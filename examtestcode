@@ -1,0 +1,162 @@
+html./////
+<!DOCTYPE html>  
+<html>  
+<head>  
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head> 
+
+<body>
+    <div class="container" style="margin-top: 20px;">
+    <button type="button" class="btn btn-info btn-lg" id="myBtn">Practice Paper</button>
+ </center> 
+
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="font-family: bold;color: black; font-size: 25px;"><u>Practice Paper</u></h4>
+        </div>
+        <div class="modal-body">
+          <form action="#">
+           
+                <?php
+                 $i = 1;
+                foreach ($data as $row) {
+                ?>
+                <input type="hidden" name="<?php echo $row->correct_option?>">
+              <p style="font-family: bold; font-size: 20px;color: black;">Q.<?php echo $row->question_id; ?>. <?php echo $row->question; ?></p>
+              <input onclick="myFunction()" type="radio" id="option_1_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_1; ?>">
+              <label id="<?php echo $i?>" for="option_1_<?php echo $row->question_id; ?>"><?php echo $row->option_1; ?></label><br>
+              <input onclick="myFunction()" type="radio" id="option_2_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_2; ?>">
+              <label id="<?php echo $i?>" for="option_2_<?php echo $row->question_id; ?>"><?php echo $row->option_2; ?></label><br>
+              <input onclick="myFunction()" type="radio" id="option_3_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_3; ?>">
+              <label id="<?php echo $i?>" for="option_3_<?php echo $row->question_id; ?>"><?php echo $row->option_3; ?></label><br>
+              <input onclick="myFunction()" type="radio" id="option_4_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_4; ?>">
+              <label id="<?php echo $i?>" for="option_4_<?php echo $row->question_id; ?>"><?php echo $row->option_4; ?></label>
+              <br />
+             <!--  <hr>
+              <label for="current-answer">Correct Answer: <span style="color:green;"><?php echo $row->correct_option; ?></span></label>
+              <hr>
+              <label for="current-answer" style="font-size: 16px;">Answer Explanation:- </label><br><span style="color:green;"><?php echo $row->answer_explanation; ?></span>
+              <hr> -->
+                <?php
+                $i++;
+                echo "\n";
+                }
+                ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" >Submit</button>
+          <a href="<?php echo base_url(); ?>index.php/pdf" class="btn btn-success" target="_blank" style="text-align: left;">PDF</a>
+
+        </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<!-- javascript code -->
+<script>
+$(document).ready(function(){
+  $("#myBtn").click(function(){
+    $("#myModal").modal();
+  });
+});
+</script>
+
+<!-- <script>
+function myFunction() {
+  document.getElementById("1").innerHTML = "";
+}
+</script> -->
+
+<script>
+$(document).ready(function(){
+  $("#option_1_1").click(function(){
+    $("#1").css({"color": "red", "border": "1px solid red"});
+  });
+});
+</script>
+
+</body>  
+</html> 
+
+controller///
+<?php  
+defined('BASEPATH') OR exit('No direct script access allowed');  
+  
+class Practice extends CI_Controller 
+{  
+
+    public function __construct()
+    {
+    parent::__construct();
+    $this->load->database();
+    $this->load->model('Practice_model');
+    }
+      
+    public function index()  
+    {  
+        $result['data']=$this->Practice_model->practice_paper();
+        $this->load->view('practice_paper', $result);  
+    }  
+
+    // pdf process
+     public function pdftest()
+    {
+        $result['data']=$this->Practice_model->practice_paper();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('testpdf', $result, true);
+        $mpdf->WriteHTML($html);
+        $file_name = 'date:'.date('Y-m-d').".pdf";
+        $mpdf->Output($file_name, 'D');
+    }
+
+    
+}  
+?>  
+model////
+<?php 
+  class Practice_model extends CI_Model
+  {
+     function practice_paper()
+	{
+	  // $query=$this->db->query("select * from qms_questions");
+	  // return $query->result();
+
+		$query = $this->db->select('*')
+        ->from('qms_questions')
+        ->limit(5)
+       // ->order_by('question_id', 'DESC')
+        ->get();
+        return $query->result();
+
+	}
+
+  function practice_paperpdf()
+  {
+    $query = $this->db->select('*')
+        ->from('qms_questions')
+        ->limit(200)
+        ->get();
+        return $query->result();
+
+  }
+  }
+?>
+route///
+$route['practice-paper'] = 'Practice/index';
+$route['pdf'] = 'Practice/pdftest';
