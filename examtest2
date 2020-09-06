@@ -1,0 +1,275 @@
+////html   practice_paepr.php
+<!DOCTYPE html>  
+<html>  
+<head>  
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head> 
+
+<body>
+    <div class="container" style="margin-top: 20px;">
+    <button type="button" class="btn btn-info btn-lg" id="myBtn">Practice Paper</button>
+ </center> 
+
+
+ <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="font-family: bold;color: black; font-size: 25px;"><u>Practice Paper</u></h4>
+        </div>
+        <div class="modal-body">
+          <form action="#">
+           
+                <?php
+                 $i = 1;
+                foreach ($data as $row) {
+                ?>
+                <input type="hidden" name="<?php echo $row->correct_option?>">
+              <p style="font-family: bold; font-size: 20px;color: black;">Q.<?php echo $row->question_id; ?>. <?php echo $row->question; ?></p>
+              <input onclick="myFunction()" type="radio" id="option_1_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_1; ?>">
+              <label id="lbl_1_<?php echo $row->question_id;?>" for="option_1_<?php echo $row->question_id; ?>"><?php echo $row->option_1; ?></label><br>
+              <input onclick="myFunction()" type="radio" id="option_2_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_2; ?>">
+              <label id="lbl_2_<?php echo $row->question_id;?>" for="option_2_<?php echo $row->question_id; ?>"><?php echo $row->option_2; ?></label><br>
+              <input onclick="myFunction()" type="radio" id="option_3_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_3; ?>">
+              <label id="lbl_3_<?php echo $row->question_id; ?>" for="option_3_<?php echo $row->question_id; ?>"><?php echo $row->option_3; ?></label><br>
+              <input onclick="myFunction()" type="radio" id="option_4_<?php echo $row->question_id; ?>" name="radio<?php echo $row->question_id; ?>" value="<?php echo $row->option_4; ?>">
+              <label id="lbl_4_<?php echo $row->question_id?>" for="option_4_<?php echo $row->question_id; ?>"><?php echo $row->option_4; ?></label>
+              <br />
+              <!--  <hr>
+              <label for="current-answer">Correct Answer: <span style="color:green;"><?php echo $row->correct_option; ?></span></label>
+              <hr>
+              <label for="current-answer" style="font-size: 16px;">Answer Explanation:- </label><br><span style="color:green;"><?php echo $row->answer_explanation; ?></span>
+              <hr> -->
+              <script>
+                  $(document).ready(function(){
+                    $("#option_1_<?php echo $row->question_id ?>").click(function(){
+                       var ans = $("#option_1_<?php echo $row->question_id ?>").val();
+                       //alert(ans);
+                       $.ajax({
+                        type: "POST",
+                        url: '<?php base_url()?>index.php/Practice/chkAnswer',
+                        dataType: 'json',
+                        data: {"data":ans},
+                        success: function(data){
+                            if(data == 'Correct'){
+                              alert('Current-answer');
+                              $("#lbl_1_<?php echo $row->question_id?>").css('color', 'green');
+                            }else{
+                              alert('In-Current-answer');
+                              $("#lbl_1_<?php echo $row->question_id?>").css('color', 'red');
+                            } 
+                        }
+
+                       });
+                    });
+                    $("#option_2_<?php echo $row->question_id ?>").click(function(){
+                       var ans = $("#option_2_<?php echo $row->question_id ?>").val();
+                       //alert(ans);
+                       $.ajax({
+                        type: "POST",
+                        url: '<?php base_url()?>index.php/Practice/chkAnswer',
+                        dataType: 'json',
+                        data: {"data":ans},
+                        success: function(data){
+                            if(data == 'Correct'){
+                              alert('Current-answer');
+                              $("#lbl_2_<?php echo $row->question_id?>").css('color', 'green');
+                            }else{
+                              alert('In-Current-answer');
+                              $("#lbl_2_<?php echo $row->question_id?>").css('color', 'red');
+                            } 
+                        }
+
+                       });
+                    });
+                     $("#option_3_<?php echo $row->question_id ?>").click(function(){
+                       var ans = $("#option_3_<?php echo $row->question_id ?>").val();
+                       //alert(ans);
+                       $.ajax({
+                        type: "POST",
+                        url: '<?php base_url()?>index.php/Practice/chkAnswer',
+                        dataType: 'json',
+                        data: {"data":ans},
+                        success: function(data){
+                            if(data == 'Correct'){
+                              alert('Current-answer');
+                              $("#lbl_3_<?php echo $row->question_id?>").css('color', 'green');
+                            }else{
+                              alert('In-Current-answer');
+                              $("#lbl_3_<?php echo $row->question_id?>").css('color', 'red');
+                            } 
+                        }
+
+                       });
+                    });
+                    $("#option_4_<?php echo $row->question_id ?>").click(function(){
+                       var ans = $("#option_4_<?php echo $row->question_id ?>").val();
+                       //alert(ans);
+                       $.ajax({
+                        type: "POST",
+                        url: '<?php base_url()?>index.php/Practice/chkAnswer',
+                        dataType: 'json',
+                        data: {"data":ans},
+                        success: function(data){
+                            if(data == 'Correct'){
+                              alert('Current-answer');
+                              $("#lbl_4_<?php echo $row->question_id?>").css('color', 'green');
+                            }else{
+                              alert('In-Current-Answer');
+                              $("#lbl_4_<?php echo $row->question_id?>").css('color', 'red');
+                            } 
+                        }
+
+                       });
+                    });
+                  });
+              </script>
+                <?php
+                $i++;
+                echo "\n";
+                }
+                ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" >Submit</button>
+          <a href="<?php echo base_url(); ?>index.php/pdf" class="btn btn-success" target="_blank" style="text-align: left;">PDF</a>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- javascript code -->
+<script>
+$(document).ready(function(){
+  $("#myBtn").click(function(){
+    $("#myModal").modal();
+  });
+});
+</script>
+<!-- <script>
+function myFunction() {
+  document.getElementById("1").innerHTML = "";
+}
+</script> -->
+</body>  
+</html> 
+
+controller /// Practice.php
+<?php  
+defined('BASEPATH') OR exit('No direct script access allowed');  
+  
+class Practice extends CI_Controller 
+{  
+
+    public function __construct()
+    {
+       parent::__construct();
+       $this->load->database();
+       $this->load->model('Practice_model');
+    }
+      
+    public function index()  
+    {  
+        $result['data']=$this->Practice_model->practice_paper();
+        $this->load->view('practice_paper', $result);  
+    } 
+    public function test()
+    {
+        
+    }
+
+
+
+    // pdf process
+     public function pdftest()
+    {
+        $result['data']=$this->Practice_model->practice_paper();
+        $mpdf = new \Mpdf\Mpdf();
+        $html = $this->load->view('testpdf', $result, true);
+        $mpdf->WriteHTML($html);
+        $file_name = 'date:'.date('Y-m-d').".pdf";
+        $mpdf->Output($file_name, 'D');
+    }
+
+    public function chkAnswer()
+    {
+      $ans = $_POST['data'];
+      //echo $ans;die();
+        $res=$this->Practice_model->chkAnswerModel($ans);
+
+        if($ans == $res[0]->correct_option){
+
+         $data = "Correct";
+
+        }
+        else{
+         $data = "in-Correct"
+        }
+
+        echo json_encode($data);
+        //print_r($res);
+       
+    }
+
+
+
+    
+}  
+?>  
+//model// Practice_model.php
+<?php 
+  class Practice_model extends CI_Model
+  {
+     function practice_paper()
+  {
+    // $query=$this->db->query("select * from qms_questions");
+    // return $query->result();
+
+    $query = $this->db->select('*')
+        ->from('question_test')
+        ->limit(25)
+       // ->order_by('question_id', 'DESC')
+        ->get();
+        return $query->result();
+
+  }
+
+  function practice_paperpdf()
+  {
+    $query = $this->db->select('*')
+        ->from('question_test')
+        ->limit(200)
+        ->get();
+        return $query->result();
+
+  }
+
+  function chkAnswerModel($ans){
+    //echo $ans;
+     $where = "option_1='$ans' or option_2 = '$ans' or option_3 = '$ans' or option_4 = '$ans'";
+     //echo $where;die();
+     $this->db->select('correct_option');
+     $this->db->from('question_test');
+     $this->db->where($where);
+     $res = $this->db->get();
+
+     return $res->result();
+
+     //print_r($a);die();
+  }
+  }
+?>
+
+//route//
+$route['practice-paper'] = 'Practice/index';
+$route['pdf'] = 'Practice/pdftest';
