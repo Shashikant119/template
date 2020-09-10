@@ -1,0 +1,16 @@
+$photo = $_FILES['photo']['name'];
+if($photo ! = '')
+{
+  $photoExt1 = @end(explode('.', $photo));
+  $phototest1 = strtolower($photoExt1);
+  $new_photo = time().'.'.$phototest1;
+  $photo_path = './upload/image/'.$new_photo;
+  move_uploaded_file($FILES['photo']['tmp_name'], $photo_path);
+}
+
+$data = array(
+  'username' => $this->input->post('username'),
+  'phone' => $this->input->post('phone'),
+  'photo' => $new_photo,
+  'email' => $this->input->post('email'),
+);
