@@ -1,0 +1,14 @@
+ if(session()->get('id')==null)
+        {
+            return redirect('/');
+        }
+        $validation = $request->validate([
+           'video_gallery'  => 'mimes:mp4,mov,ogg | max:20000' 
+        ]);
+        $videogallery = time().'.'.$request->video_gallery->extension();  
+        $request->video_gallery->move(public_path('gallery/videogallery'), $imagegallery);
+        $data = array(
+            'video_gallery'=>$videogallery,
+        );
+        DB::table('video_gallery')->insert($data);
+        return redirect('admin/Gallery-Video');
