@@ -1,0 +1,57 @@
+public function index()
+    {
+        return view('admin.login');
+    }
+    public function loginaction(Request $request)
+    {
+        $validatedData = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);    
+        $username=$request->get('username');
+        $password=$request->get('password');
+        $results=DB::table('users')->where('username',$username)->first();
+        if($results==null)
+        {
+            return back()->with(['error' => "Username Wrong!"]);
+        }
+        if($results->password!=$password)
+        {
+            return back()->with(['error' => "Password Wrong!"]);
+        }
+        else
+        { 
+            session()->put('id',$results->id);
+            session()->put('name',$results->name);
+            session()->put('username',$results->username);
+            //return redirect('Dashboard');
+            return redirect('Dashboard')->with(['success' => "Successfull Login"]);
+        }    
+
+    }
+    public function dashboard()
+    {
+        if(session()->get('id')==null)
+        {
+            return redirect('/Admin');
+        }
+        return view('admin.dashboard');
+    }
+    public function logout()
+    {
+        session()->put('id',null);
+        session()->put('username',null);
+        session()->put('name',null);
+        return redirect('/Admin');
+    }
+
+    public function registration()
+    {
+        return view('admin.registration');
+    }
+##Route------------------------------------------------------------>
+Route::get('/', [UsersController::class, 'index']);
+Route::post('/loginaction',[UsersController::class, 'loginaction']);
+Route::get('/Dashboard',[UsersController::class, 'dashboard']);
+Route::get('/Logout',[UsersController::class, 'logout']);
+Route::get('/Registration',[UsersController::class, 'registration']);
